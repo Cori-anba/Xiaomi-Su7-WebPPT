@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>驶向电气化的未来 · 小米SU7 Max车主分享会</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ============ 主题色：🌊 靛蓝瓷 (Indigo Porcelain) ============ */
+    --ink:#0a1f3d;
+    --ink-rgb:10,31,61;
+    --paper:#f1f3f5;
+    --paper-rgb:241,243,245;
+    --paper-tint:#e4e8ec;
+    --ink-tint:#152a4a;
+
+    /* ============ 字体(跨主题固定) ============ */
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --serif-en:"Playfair Display","Source Serif 4",Georgia,serif;
+    --serif-body-en:"Source Serif 4",Georgia,serif;
+    --serif-zh:"Noto Serif SC",source-han-serif-sc,serif;
+    --sans-zh:"Noto Sans SC",source-han-sans-sc,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);color:var(--paper);font-family:var(--sans-zh);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  /* ============ WebGL 双背景 ============ */
+  canvas.bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block;transition:opacity 1.2s ease}
+  canvas#bg-light{opacity:0}
+  canvas#bg-dark{opacity:1}
+  body.light-bg canvas#bg-light{opacity:1}
+  body.light-bg canvas#bg-dark{opacity:0}
+  body.low-power canvas.bg{display:none!important}
+
+  /* ============ Deck 容器 + 翻页 ============ */
+  #deck{position:fixed;inset:0;width:10000vw;height:100vh;display:flex;flex-wrap:nowrap;transition:transform .9s cubic-bezier(.77,0,.175,1);z-index:10;will-change:transform}
+  .slide{width:100vw;height:100vh;flex:0 0 100vw;position:relative;padding:6vh 6vw 10vh 6vw;display:flex;flex-direction:column;overflow:hidden}
+  .slide.light{color:var(--ink);background:var(--paper)}
+  .slide.dark{color:var(--paper);background:var(--ink)}
+
+  .slide::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;transition:background .7s ease}
+  .slide.light::before{background:rgba(var(--paper-rgb),.78);backdrop-filter:blur(3px)}
+  .slide.dark::before{background:rgba(var(--ink-rgb),.78);backdrop-filter:blur(3px)}
+  .slide.hero.light::before{background:rgba(var(--paper-rgb),.16);backdrop-filter:none}
+  .slide.hero.dark::before{background:rgba(var(--ink-rgb),.12);backdrop-filter:none}
+  .slide.hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .slide.hero.light::after{background:linear-gradient(180deg,rgba(var(--paper-rgb),.28) 0%,rgba(var(--paper-rgb),0) 14%,rgba(var(--paper-rgb),0) 86%,rgba(var(--paper-rgb),.28) 100%)}
+  .slide.hero.dark::after{background:linear-gradient(180deg,rgba(var(--ink-rgb),.32) 0%,rgba(var(--ink-rgb),0) 14%,rgba(var(--ink-rgb),0) 86%,rgba(var(--ink-rgb),.32) 100%)}
+
+  /* ============ Magazine chrome + foot ============ */
+  .chrome{display:flex;justify-content:space-between;align-items:flex-start;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.7}
+  .chrome .left,.chrome .right{display:flex;gap:2.4em;align-items:center}
+  .chrome .sep{width:40px;height:1px;background:currentColor;opacity:.4}
+  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.55}
+  .foot .title{font-family:var(--serif-zh);font-weight:400;letter-spacing:.05em;text-transform:none;opacity:.75;font-size:13px}
+
+  .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;padding:6px 14px;border:1px solid currentColor;opacity:.85}
+  .rule{width:100%;height:1px;background:currentColor;opacity:.25;margin:3vh 0}
+  .rule.v{width:1px;height:100%;margin:0}
+
+  /* ============ 字体规则 ============ */
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;opacity:.6;margin-bottom:2.6vh}
+  .display{font-family:var(--serif-en);font-weight:700;font-size:11vw;line-height:.92;letter-spacing:-.025em}
+  .display-zh{font-family:var(--serif-zh);font-weight:700;font-size:7.8vw;line-height:1.04;letter-spacing:-.005em}
+  .h1-zh{font-family:var(--serif-zh);font-weight:700;font-size:4.6vw;line-height:1.12;letter-spacing:-.005em}
+  .h2-zh{font-family:var(--serif-zh);font-weight:600;font-size:3.2vw;line-height:1.2;letter-spacing:0}
+  .h3-zh{font-family:var(--serif-zh);font-weight:500;font-size:1.9vw;line-height:1.35}
+  .body-zh{font-family:var(--sans-zh);font-weight:400;font-size:max(15px,1.22vw);line-height:1.75;opacity:.82;letter-spacing:.01em}
+  .body-serif{font-family:var(--serif-zh);font-weight:400;font-size:max(15px,1.3vw);line-height:1.65;opacity:.88}
+  .lead{font-family:var(--serif-zh);font-weight:400;font-size:1.9vw;line-height:1.4;opacity:.85}
+  .meta{font-family:var(--mono);font-size:max(11px,.88vw);letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+  .big-num{font-family:var(--serif-en);font-weight:800;font-size:10vw;line-height:.85;letter-spacing:-.03em;font-feature-settings:"tnum"}
+  .mid-num{font-family:var(--serif-en);font-weight:700;font-size:5.5vw;line-height:.88;letter-spacing:-.02em;font-feature-settings:"tnum"}
+  .ghost{font-family:var(--serif-en);font-weight:900;font-size:34vw;line-height:.8;opacity:.06;letter-spacing:-.04em;position:absolute;font-feature-settings:"tnum"}
+  em{font-style:italic;font-family:var(--serif-en)}
+  .en{font-family:var(--serif-en);font-style:italic;font-weight:500}
+
+  /* ============ 布局工具 ============ */
+  .col{display:flex;flex-direction:column;gap:2.4vh}
+  .row{display:flex;align-items:center;gap:3vw}
+  .grid-6{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:4vw 6vw;flex:1;align-content:center;padding:2vh 0}
+  .grid-9{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3vh 4vw;flex:1;align-content:center}
+  .grid-4{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);gap:4vh 6vw;flex:1;align-content:center}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:4vw;flex:1;align-content:center}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:4vw;flex:1;align-items:center}
+  .split-55{display:grid;grid-template-columns:55fr 45fr;gap:5vw;flex:1;align-items:stretch}
+  .fill{flex:1}
+  .center{align-items:center;justify-content:center;text-align:center}
+  .bottom-left{position:absolute;left:6vw;bottom:9vh;max-width:50vw}
+  .bottom-right{position:absolute;right:6vw;bottom:9vh;max-width:50vw;text-align:right}
+  .top-right{position:absolute;right:6vw;top:6vh;text-align:right}
+
+  /* ============ Stat（数字矩阵） ============ */
+  .stat{display:flex;flex-direction:column;gap:1vh;align-items:flex-start}
+  .stat .n{font-family:var(--serif-en);font-weight:800;font-size:8vw;line-height:.88;letter-spacing:-.03em;font-feature-settings:"tnum"}
+  .stat .l{font-family:var(--sans-zh);font-size:max(13px,1.05vw);opacity:.7;margin-top:1vh;font-weight:400;line-height:1.5}
+  .stat .m{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;opacity:.5;margin-bottom:.2vh}
+
+  /* ============ Callout（引用框） ============ */
+  .callout{padding:3vh 2.4vw;border-left:3px solid currentColor;position:relative;font-family:var(--serif-zh);font-size:max(15px,1.2vw);line-height:1.55;opacity:.92}
+  .slide.light .callout{background:rgba(var(--ink-rgb),.05)}
+  .slide.dark .callout{background:rgba(var(--paper-rgb),.06)}
+  .callout .cite{display:block;margin-top:1.6vh;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+  .callout .q-big{font-family:var(--serif-zh);font-weight:600;font-size:max(17px,1.6vw);line-height:1.42}
+
+  /* ============ Platform（平台卡） ============ */
+  .plat{display:flex;flex-direction:column;justify-content:flex-end;padding:2vh 0;border-top:1px solid currentColor;border-color:rgba(127,127,127,.35)}
+  .plat .name{font-family:var(--serif-zh);font-weight:700;font-size:1.8vw;margin-bottom:.6vh}
+  .plat .nb{font-family:var(--serif-en);font-weight:700;font-size:3.2vw;letter-spacing:-.02em;line-height:1;font-feature-settings:"tnum"}
+  .plat .sub{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.55;margin-top:.6vh}
+  .plat .fill{font-family:var(--sans-zh);font-weight:300;font-size:2.4vw;opacity:.28;letter-spacing:-.01em;line-height:1}
+
+  /* ============ Rowline（表格行） ============ */
+  .rowline{display:grid;grid-template-columns:1fr 2fr 1fr;gap:2vw;padding:2.2vh 0;border-top:1px solid currentColor;align-items:center;border-color:rgba(127,127,127,.25)}
+  .rowline:last-child{border-bottom:1px solid currentColor;border-color:rgba(127,127,127,.25)}
+  .rowline .k{font-family:var(--serif-zh);font-weight:700;font-size:1.7vw}
+  .rowline .v{font-family:var(--sans-zh);font-weight:400;font-size:max(14px,1.2vw);opacity:.85;line-height:1.55}
+  .rowline .m{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.6;justify-self:end}
+
+  /* ============ Pillar（支柱卡片） ============ */
+  .pillar{display:flex;flex-direction:column;gap:1.8vh}
+  .pillar .ic{font-family:var(--serif-en);font-style:italic;font-size:2.6vw;opacity:.45;font-weight:400}
+  .pillar .ic svg{width:2.8vw;height:2.8vw;stroke-width:1.2;opacity:.7}
+  .pillar .t{font-family:var(--serif-zh);font-weight:700;font-size:2.4vw;line-height:1.1}
+  .pillar .d{font-family:var(--sans-zh);font-weight:400;font-size:max(14px,1.1vw);opacity:.76;line-height:1.6}
+
+  /* ============ Signature / Highlight ============ */
+  .sign{font-family:var(--serif-en);font-style:italic;font-weight:500;font-size:2vw;opacity:.7}
+  .hi{position:relative;display:inline}
+  .slide.dark .hi::after{content:"";position:absolute;left:-.1em;right:-.1em;bottom:-.05em;height:.28em;background:rgba(var(--paper-rgb),.15);z-index:-1}
+  .slide.light .hi::after{content:"";position:absolute;left:-.1em;right:-.1em;bottom:-.05em;height:.28em;background:rgba(var(--ink-rgb),.08);z-index:-1}
+
+  /* ============ Icons（Lucide via CDN） ============ */
+  .ico{width:1em;height:1em;display:inline-block;vertical-align:-.12em;stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  .ico-lg,.ico-md,.ico-sm{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+  .ico-lg{width:2.6vw;height:2.6vw;stroke-width:1.2;display:inline-block}
+  .ico-md{width:1.8vw;height:1.8vw;stroke-width:1.3;display:inline-block;vertical-align:-.4em}
+  .ico-sm{width:1.1vw;height:1.1vw;stroke-width:1.4;display:inline-block;vertical-align:-.15em;opacity:.7}
+
+  /* ============ 图片占位 ============ */
+  .img-slot{border:1.5px dashed rgba(127,127,127,.4);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1vh;padding:2vh 2vw;font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;opacity:.55;position:relative;aspect-ratio:16/9;width:100%;max-height:56vh;margin-inline:auto;box-sizing:border-box}
+  .img-slot::before{content:"";position:absolute;inset:8px;border:1px solid currentColor;opacity:.2}
+  .img-slot .plus{font-size:2vw;font-weight:300;opacity:.5;letter-spacing:0}
+  .img-slot .label{position:relative;z-index:2;text-align:center}
+  .img-slot.r-4x3{aspect-ratio:4/3}
+  .img-slot.r-3x2{aspect-ratio:3/2}
+  .img-slot.r-1x1{aspect-ratio:1/1}
+
+  /* ============ 图片实填框 ============ */
+  .frame-img{overflow:hidden;position:relative;background:rgba(0,0,0,.04);box-sizing:border-box;width:100%;border-radius:4px}
+  .slide.dark .frame-img{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
+  .frame-img > img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  .frame-img.fit-contain > img{object-fit:contain;object-position:center center}
+  .frame-img.r-16x9{aspect-ratio:16/9;max-height:64vh}
+  .frame-img.r-16x10{aspect-ratio:16/10;max-height:56vh}
+  .frame-img.r-4x3{aspect-ratio:4/3;max-height:56vh}
+  .frame-img.r-3x2{aspect-ratio:3/2;max-height:46vh}
+  .frame-img.r-3x4{aspect-ratio:3/4;max-height:60vh}
+  .frame-img.r-1x1{aspect-ratio:1/1;max-height:50vh}
+  .frame-img.h-16{height:16vh}
+  .frame-img.h-18{height:18vh}
+  .frame-img.h-22{height:22vh}
+  .frame-img.h-26{height:26vh}
+  .frame-img.h-28{height:28vh}
+  .frame-cap{display:flex;justify-content:space-between;align-items:baseline;gap:1vw;margin-top:.8vh;font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;opacity:.72}
+  .frame-cap .pf{font-family:var(--serif-zh);font-weight:600;font-size:max(13px,1vw);letter-spacing:.04em;text-transform:none;opacity:.94}
+  .frame-cap .nb{font-family:var(--serif-en);font-style:italic;font-size:max(15px,1.2vw);letter-spacing:.02em;text-transform:none;opacity:.88}
+  .frame-cap .idx{font-family:var(--mono);opacity:.5}
+  figure.tile{display:flex;flex-direction:column;margin:0;min-width:0}
+  figure.tile > .frame-img{flex:0 0 auto}
+
+  /* ============ 导航 ============ */
+  #nav{position:fixed;left:50%;bottom:2.6vh;transform:translateX(-50%);z-index:30;display:flex;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(0,0,0,.18);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  #nav .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s ease;border:0;padding:0}
+  #nav .dot:hover{background:rgba(255,255,255,.5);transform:scale(1.15)}
+  #nav .dot.active{background:rgba(255,255,255,.95);width:22px;border-radius:999px}
+  body.light-bg #nav{background:rgba(255,255,255,.25)}
+  body.light-bg #nav .dot{background:rgba(var(--ink-rgb),.25)}
+  body.light-bg #nav .dot.active{background:rgba(var(--ink-rgb),.9)}
+  #hint{position:fixed;bottom:3vh;right:3vw;z-index:30;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.4;mix-blend-mode:difference;color:#aaa}
+  body.low-power #hint{opacity:.72;color:var(--paper);mix-blend-mode:normal}
+  body.light-bg.low-power #hint{color:var(--ink)}
+
+  /* ============ LAYOUTS API ============ */
+  .frame{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+  .frame.grid-2-7-5,
+  .frame.grid-2-6-6,
+  .frame.grid-2-8-4,
+  .frame.grid-3-3,
+  .frame.grid-6{display:grid}
+
+  .h-hero{
+    font-family:var(--serif-zh);
+    font-weight:900;
+    font-size:10vw;
+    line-height:.96;
+    letter-spacing:-.02em;
+  }
+  .h-xl{
+    font-family:var(--serif-zh);
+    font-weight:700;
+    font-size:6.2vw;
+    line-height:1.08;
+    letter-spacing:-.01em;
+  }
+  .h-sub{
+    font-family:var(--serif-zh);
+    font-weight:500;
+    font-size:3.1vw;
+    line-height:1.25;
+    letter-spacing:0;
+    opacity:.7;
+  }
+  .h-md{
+    font-family:var(--serif-zh);
+    font-weight:600;
+    font-size:2.3vw;
+    line-height:1.3;
+  }
+  .h-hero-en,.h-xl-en{font-family:var(--serif-en);letter-spacing:-.025em}
+
+  .lead{
+    font-family:var(--serif-zh);
+    font-weight:400;
+    font-size:1.75vw;
+    line-height:1.5;
+    opacity:.86;
+  }
+
+  .meta-row{
+    display:flex;
+    gap:1.2em;
+    align-items:baseline;
+    flex-wrap:wrap;
+    font-family:var(--mono);
+    font-size:max(12px,.92vw);
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    opacity:.6;
+  }
+
+  /* stat-card */
+  .stat-card{
+    display:flex;
+    flex-direction:column;
+    gap:.8vh;
+    align-items:flex-start;
+    padding-top:1.6vh;
+    border-top:1px solid currentColor;
+    border-color:rgba(127,127,127,.3);
+  }
+  .stat-card .stat-label{
+    font-family:var(--mono);
+    font-size:max(10px,.78vw);
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    opacity:.55;
+  }
+  .stat-card .stat-nb{
+    font-family:var(--serif-en);
+    font-weight:800;
+    font-size:5.8vw;
+    line-height:.9;
+    letter-spacing:-.03em;
+    font-feature-settings:"tnum";
+    margin-top:.4vh;
+  }
+  .stat-card .stat-nb .stat-unit{
+    font-family:var(--serif-zh);
+    font-weight:500;
+    font-size:.38em;
+    letter-spacing:0;
+    opacity:.72;
+    margin-left:.14em;
+  }
+  .stat-card .stat-note{
+    font-family:var(--sans-zh);
+    font-weight:400;
+    font-size:max(13px,1.05vw);
+    line-height:1.5;
+    opacity:.72;
+    margin-top:.6vh;
+  }
+  .grid-4 .stat-card .stat-nb{font-size:5vw}
+  .grid-3 .stat-card .stat-nb{font-size:6.8vw}
+
+  /* pipeline */
+  .pipeline-section{
+    margin-top:4.4vh;
+    padding-top:2.8vh;
+    border-top:1px dashed rgba(127,127,127,.32);
+  }
+  .pipeline-section:first-of-type{
+    border-top:0;
+    padding-top:0;
+    margin-top:3vh;
+  }
+  .pipeline-label{
+    font-family:var(--mono);
+    font-size:max(11px,.85vw);
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    opacity:.62;
+    margin-bottom:2.2vh;
+  }
+  .pipeline{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:1.2vw;
+  }
+  .pipeline[data-cols="3"]{grid-template-columns:repeat(3,1fr)}
+  .pipeline[data-cols="4"]{grid-template-columns:repeat(4,1fr)}
+  .pipeline[data-cols="6"]{grid-template-columns:repeat(6,1fr)}
+  .step{
+    display:flex;
+    flex-direction:column;
+    gap:.8vh;
+    padding-top:1.4vh;
+    border-top:1px solid currentColor;
+    border-color:rgba(127,127,127,.35);
+  }
+  .step-nb{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:500;
+    font-size:1.15vw;
+    opacity:.45;
+  }
+  .step-title{
+    font-family:var(--sans-zh);
+    font-weight:700;
+    font-size:1.55vw;
+    letter-spacing:.01em;
+    line-height:1.2;
+  }
+  .step-desc{
+    font-family:var(--sans-zh);
+    font-weight:400;
+    font-size:max(12px,.95vw);
+    line-height:1.45;
+    opacity:.72;
+  }
+
+  /* 网格 */
+  .grid-2-7-5{display:grid;grid-template-columns:7fr 5fr;gap:3vw 4vh;align-items:start}
+  .grid-2-6-6{display:grid;grid-template-columns:1fr 1fr;gap:3vw 4vh;align-items:start}
+  .grid-2-8-4{display:grid;grid-template-columns:8fr 4fr;gap:3vw 4vh;align-items:start}
+  .grid-3-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    grid-auto-rows:minmax(0,1fr);
+    gap:2.4vh 2vw;
+  }
+
+  figure.frame-img{margin:0;display:flex;flex-direction:column;min-width:0}
+  .img-cap{
+    display:block;
+    margin-top:.8vh;
+    font-family:var(--mono);
+    font-size:max(10px,.8vw);
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    opacity:.6;
+  }
+  .callout-src{
+    display:block;
+    margin-top:1.6vh;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    opacity:.6;
+  }
+
+  .chrome{font-family:var(--mono);font-size:max(11px,.78vw);letter-spacing:.2em;text-transform:uppercase;opacity:.62}
+  .foot{font-family:var(--mono);font-size:max(11px,.78vw);letter-spacing:.18em;text-transform:uppercase;opacity:.5}
+
+  /* 动效系统 */
+  [data-anim]{opacity:1}
+  body.motion-ready [data-anim]{opacity:0}
+  body.motion-ready [data-anim="left"]{transform:translateX(-24px)}
+  body.motion-ready [data-anim="right"]{transform:translateX(24px)}
+  body.motion-ready [data-anim="line"]{opacity:0;transform:translateY(10px)}
+  body.motion-ready [data-animate="pipeline"] [data-anim]{opacity:.15}
+  body.low-power #deck{transition:none!important}
+  body.low-power *,
+  body.low-power *::before,
+  body.low-power *::after{animation:none!important;transition:none!important}
+  body.low-power.motion-ready [data-anim],
+  body.low-power [data-anim]{opacity:1!important;transform:none!important}
+
+  /* 响应式 */
+  @media (max-width:900px){
+    .display{font-size:16vw}
+    .display-zh{font-size:12vw}
+    .h1-zh{font-size:7vw}
+    .h-hero{font-size:14vw}
+    .h-xl{font-size:9vw}
+    .pipeline{grid-template-columns:repeat(2,1fr)}
+    .grid-2-7-5,.grid-2-6-6,.grid-2-8-4{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<script>
+  (function(){
+    const KEY = 'guizang-ppt-low-power';
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stored = localStorage.getItem(KEY);
+    window.__lowPowerMode = stored === '1' || (stored === null && reduced);
+    function updateHint(){
+      const hint = document.getElementById('hint');
+      if(hint) hint.textContent = `← → 翻页 · B ${window.__lowPowerMode ? '动态' : '静态'} · ESC 索引`;
+    }
+    window.__setLowPowerMode = function(on, opts={}){
+      window.__lowPowerMode = !!on;
+      document.body.classList.toggle('low-power', window.__lowPowerMode);
+      if(opts.persist !== false) localStorage.setItem(KEY, window.__lowPowerMode ? '1' : '0');
+      if(window.__lowPowerMode && document.getAnimations){
+        document.getAnimations().forEach(a=>a.cancel());
+      }
+      updateHint();
+      dispatchEvent(new CustomEvent('ppt-low-power-change', {detail:{on:window.__lowPowerMode}}));
+      if(window.__playSlide) window.__playSlide(window.__currentSlideIndex || 0);
+    };
+    document.body.classList.toggle('low-power', window.__lowPowerMode);
+    addEventListener('DOMContentLoaded', updateHint, {once:true});
+  })();
+</script>
+
+<canvas id="bg-dark" class="bg"></canvas>
+<canvas id="bg-light" class="bg"></canvas>
+<div id="hint">← → 翻页 · B 静态 · ESC 索引</div>
+
+<div id="deck">
+
+<!-- ================================================================
+     P1 · 封面 — 驶向电气化的未来
+     ================================================================ -->
+<section class="slide hero dark">
+  <div class="chrome">
+    <div>小米SU7 Max 车主分享会 · 2026</div>
+    <div>Vol.01</div>
+  </div>
+  <div class="frame" style="display:grid; gap:4vh; align-content:center; min-height:80vh">
+    <div class="kicker" data-anim>私享会 · 能源思考</div>
+    <h1 class="h-hero" data-anim>驶向电气化的未来</h1>
+    <h2 class="h-sub" data-anim>一位 SU7 Max 车主的能源思考</h2>
+    <p class="lead" style="max-width:56vw" data-anim>
+      从机械轰鸣到电机低吟，这是一场关于速度、科技与生活方式的深度对话。
+    </p>
+    <div class="meta-row" data-anim>
+      <span>XXX</span><span>·</span><span>小米 SU7 Max 车主</span>
+    </div>
+  </div>
+  <div class="foot">
+    <div>一场关于汽车 · 能源 · 生活的分享</div>
+    <div>— 2026 —</div>
+  </div>
+</section>
+
+<!-- ================================================================
+     P2 · 数据大字报 — 燃油车是机械艺术的终点
+     ================================================================ -->
+<section class="slide light">
+  <div class="chrome">
+    <div>第一章 · 浪潮将至</div>
+    <div>02 / 09</div>
+  </div>
+  <div class="frame" style="padding-top:6vh">
+    <div class="kicker" data-anim>核心洞察</div>
+    <h2 class="h-xl" data-anim>燃油车是机械艺术的终点</h2>
+    <p class="lead" style="margin-bottom:6vh" data-anim>电车是数字生活的起点。这不是取代，而是进化。</p>
+
+    <div class="grid-4" style="margin-top:4vh">
+      <div class="stat-card" data-anim>
+        <div class="stat-label">New Energy Penetration · 2025 China</div>
+        <div class="stat-nb">&gt;50<span class="stat-unit">%</span></div>
+        <div class="stat-note">新能源汽车单月渗透率首次突破半数</div>
+      </div>
+      <div class="stat-card" data-anim>
+        <div class="stat-label">Smart Tech Penetration · YoY Growth</div>
+        <div class="stat-nb">+37<span class="stat-unit">%</span></div>
+        <div class="stat-note">智能驾驶与座舱渗透率同比增长</div>
+      </div>
+      <div class="stat-card" data-anim>
+        <div class="stat-label">Charging Infrastructure · Nationwide</div>
+        <div class="stat-nb">800<span class="stat-unit">万+</span></div>
+        <div class="stat-note">全国公共及私人充电桩保有量</div>
+      </div>
+      <div class="stat-card" data-anim>
+        <div class="stat-label">NEV Ownership · Total</div>
+        <div class="stat-nb">3,000<span class="stat-unit">万+</span></div>
+        <div class="stat-note">中国新能源汽车保有量，截至2025</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div>新能源观瞻 · 核心洞察</div>
+    <div>— · —</div>
+  </div>
+</section>
+
+<!-- ================================================================
+     P3 · 图文混排 — 智能化：新能源汽车的下半场
+     ================================================================ -->
+<section class="slide dark">
+  <div class="chrome">
+    <div>第一章 · 浪潮将至</div>
+    <div>03 / 09</div>
+  </div>
+  <div class="frame grid-2-8-4" style="padding-top:6vh">
+    <div>
+      <div class="kicker" data-anim>下半场</div>
+      <h2 class="h-xl" style="margin-bottom:3vh" data-anim>智能化：新能源汽车的下半场</h2>
+
+      <p class="lead" style="margin-bottom:3vh" data-anim>
+        当电池技术和续航里程逐渐趋同，真正的差异化竞争将发生在智能座舱和自动驾驶领域。这不仅仅是动力形式的更替，更是汽车作为「移动智能空间」的重新定义。
+      </p>
+
+      <p data-anim style="font-family:var(--sans-zh); font-size:max(14px,1.15vw); line-height:1.75; opacity:.78; margin-bottom:2.4vh">
+        SU7 Max 搭载的 HyperOS 座舱系统，实现了「人车家全生态」的无缝连接。从手机到车机，从家居到出行，小米的生态壁垒在车内第一次被完整呈现——这才是未来出行的真正形态。
+      </p>
+
+      <div class="callout" style="margin-top:3vh" data-anim>
+        「智能化的核心不是屏幕的多少，而是人、车、家之间信息流动的密度。」
+        <div class="callout-src">— 行业共识</div>
+      </div>
+    </div>
+    <figure class="frame-img r-3x4 fit-contain" data-anim>
+      <img src="assets/1.png" alt="HyperOS 智能座舱 · 人车家全生态示意">
+      <figcaption class="img-cap">HyperOS 智能座舱 · 人车家全生态示意</figcaption>
+    </figure>
+  </div>
+  <div class="foot">
+    <div>新能源观瞻 · 智能化下半场</div>
+    <div>— · —</div>
+  </div>
+</section>
+
+<!-- ================================================================
+     P4 · 章节幕封 — 第二章 · 性能与日常的双重奏
+     ================================================================ -->
+<section class="slide hero light">
+  <div class="chrome">
+    <div>第二章</div>
+    <div>Act II</div>
+  </div>
+  <div class="frame" style="display:grid; gap:6vh; align-content:center; min-height:80vh">
+    <div class="kicker" data-anim>Act II</div>
+    <h1 class="h-hero" style="font-size:8.5vw; line-height:1.12" data-anim>
+      性能与日常的<br>双重奏
+    </h1>
+    <p class="lead" style="max-width:50vw" data-anim>
+      西装之下，藏着暴徒的心脏。
+    </p>
+  </div>
+  <div class="foot">
+    <div>第二章 · 极致驾控</div>
+    <div>— · —</div>
+  </div>
+</section>
+
+<!-- ================================================================
+     P5 · Pipeline 流水线 — SU7 Max 核心配置
+     ================================================================ -->
+<section class="slide light" data-animate="pipeline">
+  <div class="chrome">
+    <div>第二章 · 极致驾控</div>
+    <div>05 / 09</div>
+  </div>
+  <div class="frame">
+    <div class="kicker">Specification · 核心配置</div>
+    <h2 class="h-xl">SU7 Max 核心参数</h2>
+
+    <div class="pipeline-section">
+      <div class="pipeline-label">动力与底盘 · Powertrain &amp; Chassis</div>
+      <div class="pipeline" data-cols="4">
+        <div class="step" data-anim="step">
+          <div class="step-nb">01</div>
+          <div class="step-title">双电机全轮驱动</div>
+          <div class="step-desc">前后双电机，智能扭矩分配，全路况稳定驾控</div>
+        </div>
+        <div class="step" data-anim="step">
+          <div class="step-nb">02</div>
+          <div class="step-title">零百加速 2.78s</div>
+          <div class="step-desc">超跑级加速性能，瞬间爆发最大扭矩</div>
+        </div>
+        <div class="step" data-anim="step">
+          <div class="step-nb">03</div>
+          <div class="step-title">800V 高压平台</div>
+          <div class="step-desc">充电 15 分钟，续航 510km，告别等待</div>
+        </div>
+        <div class="step" data-anim="step">
+          <div class="step-nb">04</div>
+          <div class="step-title">空气悬架 + CDC</div>
+          <div class="step-desc">毫秒级阻尼调节，舒适与操控兼顾</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-section">
+      <div class="pipeline-label">智能与安全 · Intelligence &amp; Safety</div>
+      <div class="pipeline" data-cols="4">
+        <div class="step" data-anim="step">
+          <div class="step-nb">05</div>
+          <div class="step-title">HyperOS 智能座舱</div>
+          <div class="step-desc">人车家全生态互联，无缝流转体验</div>
+        </div>
+        <div class="step" data-anim="step">
+          <div class="step-nb">06</div>
+          <div class="step-title">Xiaomi Pilot 智驾</div>
+          <div class="step-desc">全栈自研智能驾驶，城市与高速全覆盖</div>
+        </div>
+        <div class="step" data-anim="step">
+          <div class="step-nb">07</div>
+          <div class="step-title">CLTC 续航 800km+</div>
+          <div class="step-desc">大容量电池包，城际出行零焦虑</div>
+        </div>
+        <div class="step" data-anim="step">
+          <div class="step-nb">08</div>
+          <div class="step-title">一体式压铸车身</div>
+          <div class="step-desc">8700 吨巨型压铸机，车身刚性大幅提升</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div>SU7 Max 核心配置 · Specification</div>
+    <div>Powered by Xiaomi</div>
+  </div>
+</section>
+
+<!-- ================================================================
+     P6 · 左文右图 — 西装暴徒：日常舒适，深踩暴躁
+     ================================================================ -->
+<section class="slide dark">
+  <div class="chrome">
+    <div>第二章 · 极致驾控</div>
+    <div>06 / 09</div>
+  </div>
+  <div class="frame grid-2-7-5" style="padding-top:6vh">
+    <div style="display:flex; flex-direction:column; justify-content:space-between; gap:3vh">
+      <div>
+        <div class="kicker" data-anim>驾驶感受</div>
+        <h2 class="h-xl" style="white-space:nowrap; font-size:7.2vw" data-anim>
+          西装暴徒
+        </h2>
+        <p class="lead" style="margin-top:3vh" data-anim>
+          日常舒适，深踩暴躁。一台真正理解驾驶者意图的车。
+        </p>
+        <p data-anim style="font-family:var(--sans-zh); font-size:max(14px,1.15vw); line-height:1.75; opacity:.78; margin-top:2.4vh">
+          日常通勤中，SU7 Max 表现得像一位绅士——空气悬架过滤掉路面细碎颠簸，NVH 静谧性让车内成为移动的私人空间。但当你深踩电门，2.78 秒的零百加速会将你牢牢按在座椅上，瞬间爆发的扭矩带来纯粹而直接的推背快感。
+        </p>
+      </div>
+      <div class="callout" data-anim>
+        「转向精准，底盘扎实——<br>这是一台真正理解驾驶者意图的车。」
+        <div class="callout-src">— SU7 Max 车主真实感受</div>
+      </div>
+    </div>
+    <figure class="frame-img r-16x10 fit-contain" data-anim>
+      <img src="assets/2.png" alt="SU7 Max · 流线型车身侧面示意">
+      <figcaption class="img-cap">SU7 Max · 流线型车身侧面示意</figcaption>
+    </figure>
+  </div>
+  <div class="foot">
+    <div>驾驶感受 · 西装暴徒</div>
+    <div>— · —</div>
+  </div>
+</section>
+
+<!-- ================================================================
+     P7 · 章节幕封 — 第三章 · 不仅是工具，更是家人
+     ================================================================ -->
+<section class="slide hero dark">
+  <div class="chrome">
+    <div>第三章</div>
+    <div>Act III</div>
+  </div>
+  <div class="frame" style="display:grid; gap:6vh; align-content:center; min-height:80vh">
+    <div class="kicker" data-anim>Act III</div>
+    <h1 class="h-hero" style="font-size:8vw; line-height:1.12" data-anim>
+      不仅是工具<br>更是家人
+    </h1>
+    <p class="lead" style="max-width:48vw" data-anim>
+      它承载的不只是人，还有生活本身。
+    </p>
+  </div>
+  <div class="foot">
+    <div>第三章 · 情感共鸣</div>
+    <div>— · —</div>
+  </div>
+</section>
+
+<!-- ================================================================
+     P8 · 大引用 — 它降低的不是噪音，而是我回家路上的疲惫
+     ================================================================ -->
+<section class="slide dark" data-animate="quote">
+  <div class="chrome">
+    <div>第三章 · 情感共鸣</div>
+    <div>08 / 09</div>
+  </div>
+  <div class="frame" style="display:grid; gap:5vh; align-content:center; min-height:80vh">
+    <div class="kicker" data-anim>Quote · 心声</div>
+    <blockquote style="font-family:var(--serif-zh); font-weight:700; font-size:5.8vw; line-height:1.2; letter-spacing:-.01em; max-width:74vw">
+      <span data-anim="line" style="display:block">「它降低的不是噪音，</span>
+      <span data-anim="line" style="display:block">而是我回家路上的疲惫。」</span>
+    </blockquote>
+    <p class="lead" style="max-width:56vw; opacity:.7" data-anim>
+      每天下班后，坐在车里听一首歌、享受空调的那十分钟，是家庭生活的缓冲带。关上车门的瞬间，世界安静下来——音响传出今天想听的旋律，NAPPA 真皮座椅包裹住疲惫的身体。这十分钟，我从职场人变回父亲、丈夫，变回我自己。
+    </p>
+    <div class="meta-row" data-anim>
+      <span>— 一位 SU7 Max 车主</span><span>·</span><span>2026</span>
+    </div>
+  </div>
+  <div class="foot">
+    <div>心声 · 大引用</div>
+    <div>— · —</div>
+  </div>
+</section>
+
+<!-- ================================================================
+     P9 · 图文混排 — 为什么选择 SU7 Max
+     ================================================================ -->
+<section class="slide light">
+  <div class="chrome">
+    <div>第三章 · 情感共鸣</div>
+    <div>09 / 09</div>
+  </div>
+  <div class="frame grid-2-8-4" style="padding-top:6vh">
+    <div>
+      <div class="kicker" data-anim>选择的意义</div>
+      <h2 class="h-xl" style="margin-bottom:3vh" data-anim>为什么选择 SU7 Max</h2>
+
+      <p class="lead" style="margin-bottom:3vh" data-anim>
+        买这辆车对我家庭的意义，不是参数表上的数字，而是那些数字背后真实的生活。
+      </p>
+
+      <p data-anim style="font-family:var(--sans-zh); font-size:max(14px,1.15vw); line-height:1.75; opacity:.78; margin-bottom:2vh">
+        是周末带父母出游的底气——不再担心续航、空间与舒适，每一次出发都从容不迫。是给孩子树立拥抱科技的榜样，让他看见中国智造的力量，看见父辈对创新的信仰。是生活品质的具象化升级，每一次出行都变成一种享受。
+      </p>
+
+      <div class="callout" style="margin-top:3vh" data-anim>
+        <span class="q-big">电气化不是选择题，而是必答题。我选择了这份答案，希望你也找到属于自己的那一份。</span>
+      </div>
+    </div>
+    <figure class="frame-img r-3x4 fit-contain" data-anim>
+      <img src="assets/3.png" alt="家庭出行 · 品质生活示意">
+      <figcaption class="img-cap">家庭出行 · 品质生活示意</figcaption>
+    </figure>
+  </div>
+  <div class="foot">
+    <div>选择的意义 · 总结</div>
+    <div>— Fin —</div>
+  </div>
+</section>
+
+</div>
+
+<div id="nav"></div>
+
+<script>
+/* =============== WebGL 双背景 =============== */
+const VS = `attribute vec2 position;void main(){gl_Position=vec4(position,0.0,1.0);}`;
+
+const FS_DARK = `precision highp float;
+uniform vec2 u_resolution;uniform float u_time;uniform vec2 u_mouse;
+vec3 palette(float t,vec3 a,vec3 b,vec3 c,vec3 d){return a+b*cos(6.28318*(c*t+d));}
+void main(){
+  vec2 uv=gl_FragCoord.xy/u_resolution.xy;
+  vec2 p=uv*2.0-1.0;p.x*=u_resolution.x/u_resolution.y;
+  vec2 m=u_mouse*2.0-1.0;m.x*=u_resolution.x/u_resolution.y;
+  float md=length(p-m);
+  float mr=sin(md*15.0-u_time*4.0)*exp(-md*3.0);p+=mr*0.08;
+  vec2 p0=p;
+  for(float i=1.0;i<4.0;i++){
+    p.x+=0.1/i*sin(i*3.0*p.y+u_time*0.4)+0.05;
+    p.y+=0.1/i*cos(i*2.0*p.x+u_time*0.3)-0.05;
+  }
+  float r=length(p);float ang=atan(p.y,p.x);
+  vec3 a=vec3(0.12,0.12,0.13);
+  vec3 b=vec3(0.03,0.04,0.05);
+  vec3 c=vec3(1.0,1.0,1.0);
+  vec3 d=vec3(0.1,0.2,0.4);
+  vec3 col=palette(r*1.5+p0.x*0.5+u_time*0.1,a,b,c,d);
+  float disp=sin(r*25.0-u_time*1.5+ang*2.0)*0.5+0.5;
+  col+=vec3(disp*0.015,disp*0.01,disp*0.02);
+  float hi=pow(sin(p.x*4.0+p.y*3.0+u_time)*0.5+0.5,8.0);
+  col+=hi*0.08;
+  vec3 base=vec3(0.05,0.05,0.06);
+  col=mix(base,col,0.85);
+  gl_FragColor=vec4(col,1.0);
+}`;
+
+const FS_LIGHT = `precision highp float;
+uniform vec2 u_resolution;uniform float u_time;uniform vec2 u_mouse;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){
+  vec2 i=floor(p),f=fract(p);
+  float a=hash(i),b=hash(i+vec2(1,0));
+  float c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));
+  vec2 u=f*f*(3.0-2.0*f);
+  return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.x*u.y;
+}
+float fbm(vec2 p){
+  float v=0.0,a=0.5;
+  mat2 m=mat2(0.80,0.60,-0.60,0.80);
+  for(int i=0;i<5;i++){v+=a*noise(p);p=m*p*2.02;a*=0.5;}
+  return v;
+}
+void main(){
+  vec2 uv=gl_FragCoord.xy/u_resolution.xy;
+  vec2 p=uv;p.x*=u_resolution.x/u_resolution.y;
+  vec2 m=u_mouse;m.x*=u_resolution.x/u_resolution.y;
+  vec2 md=p-m;float dl=length(md);
+  p+=normalize(md+vec2(0.0001))*exp(-dl*5.0)*0.03;
+  vec2 q=vec2(fbm(p*1.8+u_time*0.07),fbm(p*1.8+vec2(5.2,1.3)+u_time*0.06));
+  vec2 r=vec2(fbm(p*2.0+q*1.3+vec2(1.7,9.2)+u_time*0.05),
+              fbm(p*2.0+q*1.3+vec2(8.3,2.8)+u_time*0.04));
+  float f=fbm(p*2.2+r*1.5);
+  vec3 silverDark=vec3(0.86,0.85,0.84);
+  vec3 paper=vec3(0.955,0.945,0.925);
+  vec3 col=mix(silverDark,paper,f);
+  float ph=r.x*2.2+u_time*0.35;
+  col+=vec3(0.78,0.62,0.92)*sin(ph)*0.055;
+  col+=vec3(0.55,0.72,0.95)*sin(ph*0.8+2.0)*0.05;
+  float hl=smoothstep(0.48,0.92,f);
+  col+=hl*0.06;
+  gl_FragColor=vec4(col,1.0);
+}`;
+
+const mouse={x:0.5,y:0.5};
+addEventListener('mousemove',e=>{mouse.x=e.clientX/innerWidth;mouse.y=e.clientY/innerHeight});
+
+function bootGL(canvasId, fsSrc){
+  const canvas=document.getElementById(canvasId);
+  const gl=canvas.getContext('webgl',{alpha:false,antialias:true});
+  if(!gl) return ()=>false;
+  const mk=(t,s)=>{const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh};
+  const prog=gl.createProgram();
+  gl.attachShader(prog,mk(gl.VERTEX_SHADER,VS));
+  gl.attachShader(prog,mk(gl.FRAGMENT_SHADER,fsSrc));
+  gl.linkProgram(prog);gl.useProgram(prog);
+  const buf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+  const pos=gl.getAttribLocation(prog,'position');
+  gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+  const lRes=gl.getUniformLocation(prog,'u_resolution');
+  const lT=gl.getUniformLocation(prog,'u_time');
+  const lM=gl.getUniformLocation(prog,'u_mouse');
+  const resize=()=>{
+    const d=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=innerWidth*d;canvas.height=innerHeight*d;
+    gl.viewport(0,0,canvas.width,canvas.height);
+  };
+  addEventListener('resize',resize);resize();
+  return (tSec)=>{
+    gl.uniform2f(lRes,canvas.width,canvas.height);
+    gl.uniform1f(lT,tSec);
+    gl.uniform2f(lM,mouse.x,1-mouse.y);
+    gl.drawArrays(gl.TRIANGLES,0,6);
+    return true;
+  };
+}
+let drawDark=null, drawLight=null, glRAF=0, glT0=Date.now();
+function startGL(){
+  if(window.__lowPowerMode || glRAF) return;
+  if(!drawDark) drawDark=bootGL('bg-dark',FS_DARK);
+  if(!drawLight) drawLight=bootGL('bg-light',FS_LIGHT);
+  glT0=Date.now();
+  function loop(){
+    if(window.__lowPowerMode){glRAF=0;return;}
+    const t=(Date.now()-glT0)/1000;
+    drawDark(t);drawLight(t);
+    glRAF=requestAnimationFrame(loop);
+  }
+  glRAF=requestAnimationFrame(loop);
+}
+function stopGL(){
+  if(glRAF) cancelAnimationFrame(glRAF);
+  glRAF=0;
+}
+startGL();
+addEventListener('ppt-low-power-change', e=>{e.detail.on ? stopGL() : startGL();});
+
+// =============== 导航 ===============
+const deck=document.getElementById('deck');
+const slides=deck.querySelectorAll('.slide');
+const nav=document.getElementById('nav');
+let idx=0,total=slides.length,lock=false;
+
+deck.style.width=(total*100)+'vw';
+
+slides.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.className='dot';b.dataset.i=i;b.setAttribute('aria-label','Page '+(i+1));
+  b.onclick=()=>go(i);
+  nav.appendChild(b);
+});
+
+function go(n){
+  if(lock)return;
+  idx=Math.max(0,Math.min(total-1,n));
+  window.__currentSlideIndex = idx;
+  deck.style.transform=`translateX(${-idx*100}vw)`;
+  nav.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+  const el=slides[idx];
+  const th=el.dataset.theme || (el.classList.contains('light')?'light':(el.classList.contains('dark')?'dark':'dark'));
+  document.body.classList.toggle('light-bg',th==='light');
+  if(window.__playSlide) setTimeout(()=>window.__playSlide(idx), 450);
+  lock=true;setTimeout(()=>lock=false,700);
+}
+
+// =============== ESC 索引视图 ===============
+let overviewOn=false;
+const ov=document.createElement('div');
+ov.id='overview';
+ov.style.cssText='position:fixed;inset:0;z-index:100;background:rgba(var(--ink-rgb),.92);backdrop-filter:blur(12px);display:none;overflow-y:auto;padding:4vh 4vw';
+document.body.appendChild(ov);
+
+function buildOverview(){
+  ov.innerHTML='';
+  const grid=document.createElement('div');
+  grid.style.cssText='display:grid;grid-template-columns:repeat(4,1fr);gap:2vh 1.6vw;max-width:90vw;margin:0 auto';
+  slides.forEach((s,i)=>{
+    const card=document.createElement('div');
+    card.style.cssText='cursor:pointer;border-radius:6px;overflow:hidden;border:2px solid '+(i===idx?'rgba(var(--paper-rgb),.8)':'rgba(var(--paper-rgb),.15)')+';transition:border-color .2s';
+    card.onmouseenter=()=>card.style.borderColor='rgba(var(--paper-rgb),.6)';
+    card.onmouseleave=()=>card.style.borderColor=i===idx?'rgba(var(--paper-rgb),.8)':'rgba(var(--paper-rgb),.15)';
+    const wrap=document.createElement('div');
+    wrap.style.cssText='width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;pointer-events:none;background:'+(s.classList.contains('light')?'var(--paper)':'var(--ink)');
+    const clone=s.cloneNode(true);
+    clone.style.cssText='width:100vw;height:100vh;transform:scale('+(1/4.5)+');transform-origin:top left;position:absolute;top:0;left:0;pointer-events:none';
+    wrap.appendChild(clone);
+    const label=document.createElement('div');
+    label.style.cssText='padding:6px 10px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper);opacity:.7';
+    label.textContent=(i+1)+' / '+total;
+    card.appendChild(wrap);
+    card.appendChild(label);
+    card.onclick=()=>{toggleOverview();go(i)};
+    grid.appendChild(card);
+  });
+  ov.appendChild(grid);
+}
+
+function toggleOverview(){
+  overviewOn=!overviewOn;
+  if(overviewOn){buildOverview();ov.style.display='block';}
+  else{ov.style.display='none';}
+}
+
+addEventListener('keydown',e=>{
+  if(e.key==='Escape'){e.preventDefault();toggleOverview();return;}
+  if(e.key && e.key.toLowerCase()==='b' && !e.metaKey && !e.ctrlKey && !e.altKey){
+    e.preventDefault();
+    window.__setLowPowerMode(!window.__lowPowerMode);
+    return;
+  }
+  if(overviewOn)return;
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '||e.key==='ArrowDown'){
+    if(window.__pipeAdvance && window.__pipeAdvance()) return;
+    go(idx+1);
+    return;
+  }
+  if(e.key==='ArrowLeft'||e.key==='PageUp'||e.key==='ArrowUp')go(idx-1);
+  if(e.key==='Home')go(0);
+  if(e.key==='End')go(total-1);
+});
+
+let wheelTO=null,wheelAcc=0;
+addEventListener('wheel',e=>{
+  wheelAcc+=e.deltaY+e.deltaX;
+  if(Math.abs(wheelAcc)>50){
+    if(wheelAcc>0 && window.__pipeAdvance && window.__pipeAdvance()){
+      wheelAcc=0;
+    }else{
+      go(idx+(wheelAcc>0?1:-1));wheelAcc=0;
+    }
+  }
+  clearTimeout(wheelTO);wheelTO=setTimeout(()=>wheelAcc=0,150);
+},{passive:true});
+
+let tx=0,ty=0;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+addEventListener('touchend',e=>{
+  const dx=(e.changedTouches[0].clientX-tx);
+  const dy=(e.changedTouches[0].clientY-ty);
+  if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){
+    if(dx<0 && window.__pipeAdvance && window.__pipeAdvance()) return;
+    go(idx+(dx<0?1:-1));
+  }
+},{passive:true});
+
+go(0);
+</script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
+
+<script type="module">
+let motion;
+try {
+  motion = await import('./assets/motion.min.js');
+} catch(e1) {
+  try {
+    motion = await import('https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm');
+  } catch(e2) {
+    console.warn('[motion] local + CDN both failed, disabling animations', e1, e2);
+    document.querySelectorAll('[data-anim]').forEach(el=>{el.style.opacity='1';el.style.transform='none'});
+    document.querySelectorAll('[data-animate="pipeline"] [data-anim]').forEach(el=>el.style.opacity='1');
+  }
+}
+
+if(motion){
+  const { animate, stagger } = motion;
+  document.body.classList.add('motion-ready');
+  const EASE = [.22, 1, .36, 1];
+  const slides = [...document.querySelectorAll('.slide')];
+  let pipeStep = -1;
+  let lastIdx = -1;
+
+  function resetAnims(slide){
+    slide.querySelectorAll('[data-anim]').forEach(el=>{
+      el.style.opacity='';
+      el.style.transform='';
+    });
+  }
+
+  function revealStatic(slide){
+    resetAnims(slide);
+    document.getAnimations?.().forEach(a=>a.cancel());
+    slide.querySelectorAll('[data-anim]').forEach(el=>{
+      el.style.opacity='1';
+      el.style.transform='none';
+    });
+  }
+
+  function playSlide(i){
+    const slide = slides[i];
+    if(!slide) return;
+    lastIdx = i;
+    const recipe = slide.dataset.animate || (slide.classList.contains('hero') ? 'hero' : 'cascade');
+
+    if(window.__lowPowerMode){
+      revealStatic(slide);
+      return;
+    }
+
+    if(recipe === 'pipeline'){
+      pipeStep = -1;
+      slide.querySelectorAll('[data-anim]').forEach(el=>{
+        el.style.opacity='0.15';
+        el.style.transform='none';
+      });
+      return;
+    }
+
+    resetAnims(slide);
+    const all = [...slide.querySelectorAll('[data-anim]')];
+    if(!all.length) return;
+
+    if(recipe === 'directional'){
+      const lefts  = all.filter(el=>el.dataset.anim==='left');
+      const divs   = all.filter(el=>el.dataset.anim==='divider');
+      const rights = all.filter(el=>el.dataset.anim==='right');
+      const others = all.filter(el=>!['left','right','divider'].includes(el.dataset.anim));
+      if(others.length) animate(others, {opacity:[0,1], y:[12,0]}, {duration:.6, delay:stagger(.1, {start:.15}), easing:EASE});
+      if(lefts.length)  animate(lefts,  {opacity:[0,1], x:[-24,0]}, {duration:.8, delay:.35, easing:EASE});
+      if(divs.length)   animate(divs,   {opacity:[0,.25]},          {duration:.5, delay:.9});
+      if(rights.length) animate(rights, {opacity:[0,1], x:[24,0]},  {duration:.8, delay:1.0, easing:EASE});
+      return;
+    }
+
+    if(recipe === 'quote'){
+      const lines = all.filter(el=>el.dataset.anim==='line');
+      const others = all.filter(el=>el.dataset.anim!=='line');
+      if(others.length) animate(others, {opacity:[0,1], y:[8,0]},    {duration:.6, delay:stagger(.12, {start:.2}), easing:EASE});
+      if(lines.length)  animate(lines,  {opacity:[.35,1], y:[10,0]}, {duration:.8, delay:stagger(.55, {start:.5}), easing:EASE});
+      return;
+    }
+
+    if(recipe === 'hero'){
+      animate(all, {opacity:[0,1], y:[14,0]}, {duration:.9, delay:stagger(.16, {start:.2}), easing:EASE});
+      return;
+    }
+
+    animate(all, {opacity:[0,1], y:[16,0]}, {duration:.75, delay:stagger(.1, {start:.15}), easing:EASE});
+  }
+
+  function pipeAdvance(){
+    if(window.__lowPowerMode) return false;
+    const slide = slides[lastIdx];
+    if(!slide || slide.dataset.animate !== 'pipeline') return false;
+    const steps  = [...slide.querySelectorAll('[data-anim="step"]')];
+    const arrows = [...slide.querySelectorAll('[data-anim="arrow"]')];
+    if(pipeStep >= steps.length - 1) return false;
+    pipeStep++;
+    animate(steps[pipeStep], {opacity:[0.15,1], y:[8,0]}, {duration:.5, easing:EASE});
+    if(pipeStep > 0 && arrows[pipeStep-1]){
+      animate(arrows[pipeStep-1], {opacity:[0.15,.7]}, {duration:.3, delay:.15});
+    }
+    return true;
+  }
+
+  window.__playSlide = playSlide;
+  window.__pipeAdvance = pipeAdvance;
+
+  playSlide(0);
+}
+</script>
+</body>
+</html>
